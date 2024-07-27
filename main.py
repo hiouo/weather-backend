@@ -5,10 +5,12 @@ from threading import Thread
 import time
 import math
 import os
+from flask_cors import CORS
 
 from SystemConfig.SystemConfig import System
 
-app = Flask(__name__, static_folder='../frontend/dist', static_url_path='')
+app = Flask(__name__)
+CORS(app)  # 允許跨域請求
 
 api_key = System.get_api_key()
 
