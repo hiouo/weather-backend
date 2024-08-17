@@ -15,7 +15,10 @@ def get_weather():
 
     user_coords = (user_location.latitude, user_location.longitude)
     weather_data = weather_service.update_weather_data(user_coords)
-    return jsonify(weather_data)
+    if weather_data:
+        return jsonify(weather_data)
+    else:
+        return jsonify({"error": "No weather data found"}), 404
 
 if __name__ == '__main__':
     app.run(host='0.0.0.0', port=80)

@@ -41,19 +41,19 @@ class WeatherService:
                     'distance': distance
                 })
 
-        # 按距離排序並返回最近的10個地區
-        sorted_distance_list = sorted(distance_list, key=lambda x: x['distance'])[:9]
+        # 按距離排序並返回最近的一個地區
+        sorted_distance_list = sorted(distance_list, key=lambda x: x['distance'])[:1]
 
-        # 獲取這些地區的天氣數據
-        weather_data_list = []
-        for data in sorted_distance_list:
+        # 獲取這個地區的天氣數據
+        if sorted_distance_list:
+            data = sorted_distance_list[0]
             weather_data = self.get_weather(data['coordinates'][0], data['coordinates'][1])
             if weather_data:
-                weather_data_list.append({
+                return {
                     'city': data['city'],
                     'district': data['district'],
                     'name': data['name'],
                     'weather': weather_data
-                })
-
-        return weather_data_list
+                }
+        
+        return None
