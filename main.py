@@ -10,11 +10,11 @@ weather_service = WeatherService()
 @app.route('/api/weather', methods=['POST'])
 def get_weather():
     user_location = UserLocation()
+
     if not user_location.is_valid():
         return jsonify({"error": "Invalid user location"}), 400
 
-    user_coords = (user_location.latitude, user_location.longitude)
-    weather_data = weather_service.update_weather_data(user_coords)
+    weather_data = weather_service.get_weather_data(user_location.latitude, user_location.longitude)
     if weather_data:
         return jsonify(weather_data)
     else:
